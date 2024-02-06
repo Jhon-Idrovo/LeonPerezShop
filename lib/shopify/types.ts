@@ -1,5 +1,3 @@
-export type Maybe<T> = T | null;
-
 export type Connection<T> = {
   edges: Array<Edge<T>>;
 };
@@ -8,15 +6,16 @@ export type Edge<T> = {
   node: T;
 };
 
-export type Cart = Omit<ShopifyCart, 'lines'> & {
+export type Cart = {
   lines: CartItem[];
+  totalCost: number;
 };
 
 export type CartItem = {
   id: string;
   quantity: number;
   cost: {
-    totalAmount: Money;
+    totalAmount: number;
   };
   merchandise: {
     id: string;
@@ -29,7 +28,12 @@ export type CartItem = {
   };
 };
 
-export type Collection = ShopifyCollection & {
+export type Collection = {
+  handle: string;
+  title: string;
+  description: string;
+  seo: SEO;
+  updatedAt: string;
   path: string;
 };
 
@@ -43,11 +47,6 @@ export type Image = {
 export type Menu = {
   title: string;
   path: string;
-};
-
-export type Money = {
-  amount: string;
-  currencyCode: string;
 };
 
 export type Page = {
@@ -80,7 +79,7 @@ export type ProductVariant = {
     name: string;
     value: string;
   }[];
-  price: Money;
+  price: number;
 };
 
 export type SEO = {
@@ -92,9 +91,9 @@ export type ShopifyCart = {
   id: string;
   checkoutUrl: string;
   cost: {
-    subtotalAmount: Money;
-    totalAmount: Money;
-    totalTaxAmount: Money;
+    subtotalAmount: number;
+    totalAmount: number;
+    totalTaxAmount: number;
   };
   lines: Connection<CartItem>;
   totalQuantity: number;
@@ -117,8 +116,8 @@ export type ShopifyProduct = {
   descriptionHtml: string;
   options: ProductOption[];
   priceRange: {
-    maxVariantPrice: Money;
-    minVariantPrice: Money;
+    maxVariantPrice: number;
+    minVariantPrice: number;
   };
   variants: Connection<ProductVariant>;
   featuredImage: Image;
@@ -126,140 +125,4 @@ export type ShopifyProduct = {
   seo: SEO;
   tags: string[];
   updatedAt: string;
-};
-
-export type ShopifyCartOperation = {
-  data: {
-    cart: ShopifyCart;
-  };
-  variables: {
-    cartId: string;
-  };
-};
-
-export type ShopifyCreateCartOperation = {
-  data: { cartCreate: { cart: ShopifyCart } };
-};
-
-export type ShopifyAddToCartOperation = {
-  data: {
-    cartLinesAdd: {
-      cart: ShopifyCart;
-    };
-  };
-  variables: {
-    cartId: string;
-    lines: {
-      merchandiseId: string;
-      quantity: number;
-    }[];
-  };
-};
-
-export type ShopifyRemoveFromCartOperation = {
-  data: {
-    cartLinesRemove: {
-      cart: ShopifyCart;
-    };
-  };
-  variables: {
-    cartId: string;
-    lineIds: string[];
-  };
-};
-
-export type ShopifyUpdateCartOperation = {
-  data: {
-    cartLinesUpdate: {
-      cart: ShopifyCart;
-    };
-  };
-  variables: {
-    cartId: string;
-    lines: {
-      id: string;
-      merchandiseId: string;
-      quantity: number;
-    }[];
-  };
-};
-
-export type ShopifyCollectionOperation = {
-  data: {
-    collection: ShopifyCollection;
-  };
-  variables: {
-    handle: string;
-  };
-};
-
-export type ShopifyCollectionProductsOperation = {
-  data: {
-    collection: {
-      products: Connection<ShopifyProduct>;
-    };
-  };
-  variables: {
-    handle: string;
-    reverse?: boolean;
-    sortKey?: string;
-  };
-};
-
-export type ShopifyCollectionsOperation = {
-  data: {
-    collections: Connection<ShopifyCollection>;
-  };
-};
-
-export type ShopifyMenuOperation = {
-  data: {
-    menu?: {
-      items: {
-        title: string;
-        url: string;
-      }[];
-    };
-  };
-  variables: {
-    handle: string;
-  };
-};
-
-export type ShopifyPageOperation = {
-  data: { pageByHandle: Page };
-  variables: { handle: string };
-};
-
-export type ShopifyPagesOperation = {
-  data: {
-    pages: Connection<Page>;
-  };
-};
-
-export type ShopifyProductOperation = {
-  data: { product: ShopifyProduct };
-  variables: {
-    handle: string;
-  };
-};
-
-export type ShopifyProductRecommendationsOperation = {
-  data: {
-    productRecommendations: ShopifyProduct[];
-  };
-  variables: {
-    productId: string;
-  };
-};
-
-export type ShopifyProductsOperation = {
-  data: {
-    products: Connection<ShopifyProduct>;
-  };
-  variables: {
-    query?: string;
-    reverse?: boolean;
-    sortKey?: string;
-  };
 };
