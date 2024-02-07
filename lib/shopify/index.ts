@@ -195,9 +195,9 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
   };
 }
 
-// export async function getProductRecommendations(productId: string): Promise<Product[]> {
-//   return [];
-// }
+export async function getProductRecommendations(productId: string): Promise<Product[]> {
+  return [];
+}
 
 export async function getProducts({
   query,

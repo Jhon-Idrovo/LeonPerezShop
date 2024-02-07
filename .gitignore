@@ -22,3 +22,6 @@ rad.json
 TestResults.xml
 
 node_modules
+.next
+next-env.d.ts
+tsconfig.tsbuildinfo

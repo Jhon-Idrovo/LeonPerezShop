@@ -67,9 +67,9 @@ export default async function ProductPage({ params }: { params: { handle: string
       availability: product.availableForSale
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
-      priceCurrency: product.priceRange.minVariantPrice.currencyCode,
-      highPrice: product.priceRange.maxVariantPrice.amount,
-      lowPrice: product.priceRange.minVariantPrice.amount
+      priceCurrency: '$',
+      highPrice: product.priceRange.maxVariantPrice,
+      lowPrice: product.priceRange.minVariantPrice
     }
   };
 
@@ -82,7 +82,7 @@ export default async function ProductPage({ params }: { params: { handle: string
         }}
       />
       <div className="mx-auto max-w-screen-2xl px-4">
-        <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row lg:gap-8">
+        <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
           <div className="h-full w-full basis-full lg:basis-4/6">
             <Gallery
               images={product.images.map((image: Image) => ({
@@ -126,8 +126,8 @@ async function RelatedProducts({ id }: { id: string }) {
                 alt={product.title}
                 label={{
                   title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
+                  amount: product.priceRange.maxVariantPrice.toString(),
+                  currencyCode: ''
                 }}
                 src={product.featuredImage?.url}
                 fill
