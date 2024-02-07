@@ -12,7 +12,6 @@ import {
   ShopifyCollection,
   ShopifyProduct
 } from './types';
-import axios from 'axios';
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
@@ -202,8 +201,12 @@ export async function getProducts({
   reverse?: boolean;
   sortKey?: string;
 }): Promise<Product[]> {
-  const r = await axios.get('http://localhost/api/airtable');
-  console.log(r);
+  console.log('GETTING PRODUCTS');
+
+  const r = await fetch('http://localhost:3000/api/airtable', {
+    method: 'GET'
+  });
+  console.log(r.statusText);
 
   return [];
 }

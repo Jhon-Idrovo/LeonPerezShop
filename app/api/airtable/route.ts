@@ -9,5 +9,5 @@ export async function GET(
 ): Promise<NextResponse> {
   console.log('HEEEREEE');
 
-  return res;
+  return res.json();
 }
