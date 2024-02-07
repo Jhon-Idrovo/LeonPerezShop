@@ -8,6 +8,7 @@ export type Edge<T> = {
 
 export type Cart = {
   lines: CartItem[];
+  id: string;
   totalCost: number;
 };
 

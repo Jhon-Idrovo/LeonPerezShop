@@ -12,6 +12,7 @@ import {
   ShopifyCollection,
   ShopifyProduct
 } from './types';
+import axios from 'axios';
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
@@ -21,12 +22,6 @@ const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 
 const removeEdgesAndNodes = (array: Connection<any>) => {
   return array.edges.map((edge) => edge?.node);
-};
-
-const reshapeCart = (cart: Cart): Cart => {
-  return {
-    ...cart
-  };
 };
 
 const reshapeCollection = (collection: ShopifyCollection): Collection | undefined => {
@@ -99,31 +94,30 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
 };
 
 export async function createCart(): Promise<Cart> {
-  return reshapeCart({ lines: [], totalCost: 0 });
+  return { lines: [], totalCost: 0, id: '' };
 }
 
 export async function addToCart(
   cartId: string,
   lines: { merchandiseId: string; quantity: number }[]
 ): Promise<Cart> {
-  return reshapeCart({ lines: [], totalCost: 0 });
+  return { lines: [], totalCost: 0, id: '' };
 }
 
 export async function removeFromCart(cartId: string, lineIds: string[]): Promise<Cart> {
-  return reshapeCart({ lines: [], totalCost: 0 });
+  return { lines: [], totalCost: 0, id: '' };
 }
 
 export async function updateCart(
   cartId: string,
   lines: { id: string; merchandiseId: string; quantity: number }[]
 ): Promise<Cart> {
-  return reshapeCart({ lines: [], totalCost: 0 });
+  return { lines: [], totalCost: 0, id: '' };
 }
 
 export async function getCart(cartId: string): Promise<Cart | undefined> {
-  return reshapeCart({ lines: [], totalCost: 0 });
+  return { lines: [], totalCost: 0, id: '' };
 }
-
 export async function getCollection(handle: string): Promise<Collection | undefined> {
   return undefined;
 }
@@ -165,7 +159,7 @@ export async function getPages(): Promise<Page[]> {
   return [await getPage('')];
 }
 
-export async function getProduct(handle: string): Promise<Product | undefined> {
+export async function getProduct(productId: string): Promise<Product | undefined> {
   return {
     title: 'title',
     variants: [],
@@ -208,5 +202,8 @@ export async function getProducts({
   reverse?: boolean;
   sortKey?: string;
 }): Promise<Product[]> {
+  const r = await axios.get('http://localhost/api/airtable');
+  console.log(r);
+
   return [];
 }
