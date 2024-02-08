@@ -203,10 +203,9 @@ export async function getProducts({
 }): Promise<Product[]> {
   console.log('GETTING PRODUCTS');
 
-  const r = await fetch('http://localhost:3000/api/airtable', {
+  const r = await fetch('http://localhost:3000/api/airtable/products', {
     method: 'GET'
   });
-  console.log(r.statusText);
 
   return [];
 }
